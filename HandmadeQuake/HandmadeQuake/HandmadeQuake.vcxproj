@@ -118,14 +118,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="screen_buffer.cpp" />
-    <ClCompile Include="sys_win.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
+    <ClCompile Include="SysWin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="quakedef.h" />
-    <ClInclude Include="screen_buffer.h" />
-    <ClInclude Include="shape_helper.h" />
-    <ClInclude Include="sys_win.h" />
+    <ClInclude Include="Quakedef.h" />
+    <ClInclude Include="FrameBuffer.h" />
+    <ClInclude Include="ShapeHelper.h" />
+    <ClInclude Include="SysWin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

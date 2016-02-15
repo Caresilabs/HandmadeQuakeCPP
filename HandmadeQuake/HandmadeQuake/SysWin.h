@@ -1,7 +1,7 @@
 #pragma once
 
 #include "quakedef.h"
-#include "screen_buffer.h"
+#include "FrameBuffer.h"
 #include <windows.h>
 
 
@@ -19,7 +19,7 @@ private:
 	const int BufferWidth = 640;
 	const int BufferHeight = 480;
 	
-	ScreenBuffer BackBuffer;
+	FrameBuffer BackBuffer;
 
 	static bool IsRunning;
 };

@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sys_win.cpp">
+    <ClCompile Include="FrameBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="screen_buffer.cpp">
+    <ClCompile Include="SysWin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="quakedef.h">
+    <ClInclude Include="FrameBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sys_win.h">
+    <ClInclude Include="Quakedef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shape_helper.h">
+    <ClInclude Include="ShapeHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="screen_buffer.h">
+    <ClInclude Include="SysWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

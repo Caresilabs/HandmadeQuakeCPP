@@ -1,7 +1,5 @@
-#include "sys_win.h"
-#include <cmath>
-
-#include "shape_helper.h"
+#include "SysWin.h"
+#include "ShapeHelper.h"
 
 bool SysWin::IsRunning = true;
 
@@ -33,13 +31,13 @@ LRESULT SysWin::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 }
 
 int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
-	WNDCLASSEX wc = { 0 };
-	wc.cbSize = sizeof( wc );
-	wc.lpfnWndProc = SysWin::WindowProc;
-	wc.hInstance = hInstance;
-	wc.lpszClassName = "Module 3";
+	WNDCLASSEX Wc = { 0 };
+	Wc.cbSize = sizeof( Wc );
+	Wc.lpfnWndProc = SysWin::WindowProc;
+	Wc.hInstance = hInstance;
+	Wc.lpszClassName = "Module 3";
 
-	RegisterClassExA( &wc );
+	RegisterClassExA( &Wc );
 
 	DWORD dwExStyle = 0;
 	DWORD dwStyle = WS_OVERLAPPEDWINDOW;
@@ -69,7 +67,7 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 
 	HWND MainWindow = CreateWindowEx(
-		dwExStyle, "Module 3", "Lesson 3.2", dwStyle,
+		dwExStyle, "Module 3", "Lesson 3.3", dwStyle,
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		WinRect.right - WinRect.left, WinRect.bottom - WinRect.top,
 		nullptr, nullptr,
@@ -84,13 +82,12 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	// Define bitmap info
 	BitMapInfo.bmiHeader.biSize = sizeof( BitMapInfo.bmiHeader );
 	BitMapInfo.bmiHeader.biWidth = BufferWidth;
-	BitMapInfo.bmiHeader.biHeight = BufferHeight;
+	BitMapInfo.bmiHeader.biHeight = -BufferHeight;
 	BitMapInfo.bmiHeader.biPlanes = 1;
 	BitMapInfo.bmiHeader.biBitCount = 32;
 	BitMapInfo.bmiHeader.biCompression = BI_RGB;
 
 	MSG Message;
-	int Frame = 0;
 	while ( IsRunning ) {
 
 		while ( PeekMessage( &Message, 0, 0, 0, PM_REMOVE ) ) {
@@ -99,12 +96,12 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 
 		// Clear Screen
-		BackBuffer.Clear(RGB_DATA(0, 0, 0));
+		BackBuffer.Clear(RGB8(0, 0, 0));
 
-		DrawCircle( BackBuffer, RGB_DATA(0, 155,0), 320, 240, sin(Frame * 0.01f) * 200 );
+		DrawRect(BackBuffer, 10, 10, 400, 200, RGB8(255, 0, 0));
 
-		++Frame;
-		/*RGB_DATA* Ptr = ((RGB_DATA*)BackBuffer) + (BufferWidth * 1 + 1);
+		/*
+		RGB_DATA* Ptr = ((RGB_DATA*)BackBuffer) + (BufferWidth * 1 + 1);
 		for ( int t = 1; t < 110; t++ ) {
 
 			for ( float i = 0; i < 3.14*2.f; i+= (t *  0.0001f) ) {
@@ -117,15 +114,15 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			}
 		}*/
 
-		HDC dc = GetDC( MainWindow );
-		StretchDIBits( dc,
+		HDC DC = GetDC( MainWindow );
+		StretchDIBits( DC,
 			0, 0, BufferWidth, BufferHeight,
 			0, 0, BufferWidth, BufferHeight,
 			BackBuffer, &BitMapInfo,
 			DIB_RGB_COLORS, SRCCOPY
 		);
 
-		DeleteDC( dc );
+		DeleteDC( DC );
 
 	}
 
