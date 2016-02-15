@@ -1,24 +1,4 @@
-#include "quakedef.h"
-#include <windows.h>
-
-bool IsRunning = true;
-
-int BufferWidth = 640;
-int BufferHeight = 480;
-
-void* BackBuffer;
-
-BITMAPINFO BitMapInfo = { 0 };
-
-union RGB_DATA {
-	struct {
-		uint8 Red;
-		uint8 Green;
-		uint8 Blue;
-	};
-
-	uint32 RGB;
-};
+#include "sys_win.h"
 
 LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 	LRESULT Result = 0;
@@ -101,6 +81,7 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 	MSG Message;
 	while ( IsRunning ) {
+
 		while ( PeekMessage( &Message, 0, 0, 0, PM_REMOVE ) ) {
 			TranslateMessage( &Message );
 			DispatchMessage( &Message );
@@ -110,9 +91,9 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		for ( int i = 0; i < BufferHeight; i++ ) {
 			for ( int i = 0; i < BufferWidth; i++ ) {
 
-				MemoryWalker->Red = rand() % 256;
-				MemoryWalker->Green = rand() % 256;
-				MemoryWalker->Blue = rand() % 256;
+				MemoryWalker->Red = 255;
+				MemoryWalker->Green = 0;
+				MemoryWalker->Blue = 0;
 
 				++MemoryWalker;
 				//(*MemoryWalker)->RGB = (Red << 16) | (Green << 8) | (Blue);
@@ -127,7 +108,7 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 			DIB_RGB_COLORS, SRCCOPY
 			);
 
-		DeleteObject( dc );
+		DeleteDC( dc );
 
 	}
 

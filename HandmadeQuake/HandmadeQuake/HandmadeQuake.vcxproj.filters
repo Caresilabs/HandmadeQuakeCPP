@@ -23,5 +23,8 @@
     <ClInclude Include="quakedef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sys_win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
