@@ -8,7 +8,7 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	return main.SysMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
 }
 
-SysWin::SysWin() : BackBuffer( BufferWidth, BufferHeight ) {
+SysWin::SysWin() : BackBuffer( BufferWidth, BufferHeight, BytesPerPixel ) {
 }
 
 LRESULT SysWin::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
@@ -84,8 +84,17 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	BitMapInfo.bmiHeader.biWidth = BufferWidth;
 	BitMapInfo.bmiHeader.biHeight = -BufferHeight;
 	BitMapInfo.bmiHeader.biPlanes = 1;
-	BitMapInfo.bmiHeader.biBitCount = 32;
+	BitMapInfo.bmiHeader.biBitCount = 8 * BytesPerPixel;
 	BitMapInfo.bmiHeader.biCompression = BI_RGB;
+
+	if ( BytesPerPixel == 1 ) {
+		BitMapInfo.acolor[0] = { 0 };
+		for ( int i = 1; i < 256; i++ ) {
+			BitMapInfo.acolor[i].rgbRed = rand() % 256;
+			BitMapInfo.acolor[i].rgbGreen = rand() % 256;
+			BitMapInfo.acolor[i].rgbBlue = rand() % 256;
+		}
+	}
 
 	MSG Message;
 	while ( IsRunning ) {
@@ -96,29 +105,19 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 
 		// Clear Screen
-		BackBuffer.Clear(RGB8(0, 0, 0));
-
-		DrawRect(BackBuffer, 10, 10, 400, 200, RGB8(255, 0, 0));
-
-		/*
-		RGB_DATA* Ptr = ((RGB_DATA*)BackBuffer) + (BufferWidth * 1 + 1);
-		for ( int t = 1; t < 110; t++ ) {
-
-			for ( float i = 0; i < 3.14*2.f; i+= (t *  0.0001f) ) {
-
-				Ptr->Red = 255;
-				Ptr->Green = 0;
-				Ptr->Blue = 0;
-
-				Ptr = Get( 320 + cos( i ) * t, 240 + sin( i ) * t );
-			}
-		}*/
+		if ( BytesPerPixel == 1 ) {
+			BackBuffer.Clear( RGB8() );
+			DrawRect( BackBuffer, RGB8( 3 ), 10, 10, 400, 200 );
+		} else {
+ 			BackBuffer.Clear( RGB32( 255, 0, 0 ) );
+			DrawRect( BackBuffer, RGB32( 0, 255, 0 ), 10, 10, 400, 200 );
+		}
 
 		HDC DC = GetDC( MainWindow );
 		StretchDIBits( DC,
 			0, 0, BufferWidth, BufferHeight,
 			0, 0, BufferWidth, BufferHeight,
-			BackBuffer, &BitMapInfo,
+			BackBuffer, (BITMAPINFO*)&BitMapInfo,
 			DIB_RGB_COLORS, SRCCOPY
 		);
 
