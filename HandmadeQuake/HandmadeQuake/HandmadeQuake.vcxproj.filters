@@ -18,12 +18,21 @@
     <ClCompile Include="sys_win.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="screen_buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="quakedef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sys_win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shape_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="screen_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

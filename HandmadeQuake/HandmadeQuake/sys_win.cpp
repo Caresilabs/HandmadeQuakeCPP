@@ -1,13 +1,19 @@
 #include "sys_win.h"
+#include <cmath>
 
-bool sys_win::IsRunning = true;
+#include "shape_helper.h"
+
+bool SysWin::IsRunning = true;
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
-	sys_win main;
+	SysWin main;
 	return main.SysMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
 }
 
-LRESULT sys_win::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
+SysWin::SysWin() : BackBuffer( BufferWidth, BufferHeight ) {
+}
+
+LRESULT SysWin::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 	LRESULT Result = 0;
 
 	switch ( uMsg ) {
@@ -26,10 +32,10 @@ LRESULT sys_win::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam 
 	return Result;
 }
 
-int sys_win::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
+int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
 	WNDCLASSEX wc = { 0 };
 	wc.cbSize = sizeof( wc );
-	wc.lpfnWndProc = sys_win::WindowProc;
+	wc.lpfnWndProc = SysWin::WindowProc;
 	wc.hInstance = hInstance;
 	wc.lpszClassName = "Module 3";
 
@@ -38,7 +44,7 @@ int sys_win::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	DWORD dwExStyle = 0;
 	DWORD dwStyle = WS_OVERLAPPEDWINDOW;
 
-	bool Fullscreen = true;
+	bool Fullscreen = false;
 
 	if ( Fullscreen ) {
 		DEVMODE dmScreenSettings = { 0 };
@@ -83,9 +89,8 @@ int sys_win::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	BitMapInfo.bmiHeader.biBitCount = 32;
 	BitMapInfo.bmiHeader.biCompression = BI_RGB;
 
-	BackBuffer = new uint32[BufferWidth * BufferHeight];
-
 	MSG Message;
+	int Frame = 0;
 	while ( IsRunning ) {
 
 		while ( PeekMessage( &Message, 0, 0, 0, PM_REMOVE ) ) {
@@ -93,18 +98,24 @@ int sys_win::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 			DispatchMessage( &Message );
 		}
 
-		RGB_DATA* MemoryWalker = (RGB_DATA*)BackBuffer;
-		for ( int i = 0; i < BufferHeight; i++ ) {
-			for ( int i = 0; i < BufferWidth; i++ ) {
+		// Clear Screen
+		BackBuffer.Clear(RGB_DATA(0, 0, 0));
 
-				MemoryWalker->Red = 255;
-				MemoryWalker->Green = 0;
-				MemoryWalker->Blue = 0;
+		DrawCircle( BackBuffer, RGB_DATA(0, 155,0), 320, 240, sin(Frame * 0.01f) * 200 );
 
-				++MemoryWalker;
-				//(*MemoryWalker)->RGB = (Red << 16) | (Green << 8) | (Blue);
+		++Frame;
+		/*RGB_DATA* Ptr = ((RGB_DATA*)BackBuffer) + (BufferWidth * 1 + 1);
+		for ( int t = 1; t < 110; t++ ) {
+
+			for ( float i = 0; i < 3.14*2.f; i+= (t *  0.0001f) ) {
+
+				Ptr->Red = 255;
+				Ptr->Green = 0;
+				Ptr->Blue = 0;
+
+				Ptr = Get( 320 + cos( i ) * t, 240 + sin( i ) * t );
 			}
-		}
+		}*/
 
 		HDC dc = GetDC( MainWindow );
 		StretchDIBits( dc,
@@ -112,7 +123,7 @@ int sys_win::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 			0, 0, BufferWidth, BufferHeight,
 			BackBuffer, &BitMapInfo,
 			DIB_RGB_COLORS, SRCCOPY
-			);
+		);
 
 		DeleteDC( dc );
 
@@ -123,6 +134,5 @@ int sys_win::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	return EXIT_SUCCESS;
 }
 
-sys_win::~sys_win() {
-	SAFE_DELETE( BackBuffer );
+SysWin::~SysWin() {
 }

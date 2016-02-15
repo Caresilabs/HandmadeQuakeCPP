@@ -118,10 +118,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="screen_buffer.cpp" />
     <ClCompile Include="sys_win.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="quakedef.h" />
+    <ClInclude Include="screen_buffer.h" />
+    <ClInclude Include="shape_helper.h" />
     <ClInclude Include="sys_win.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
