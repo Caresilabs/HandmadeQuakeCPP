@@ -1,6 +1,13 @@
 #include "sys_win.h"
 
-LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
+bool sys_win::IsRunning = true;
+
+int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
+	sys_win main;
+	return main.SysMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+}
+
+LRESULT sys_win::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 	LRESULT Result = 0;
 
 	switch ( uMsg ) {
@@ -19,11 +26,10 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam 
 	return Result;
 }
 
-int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
-
+int sys_win::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
 	WNDCLASSEX wc = { 0 };
 	wc.cbSize = sizeof( wc );
-	wc.lpfnWndProc = WindowProc;
+	wc.lpfnWndProc = sys_win::WindowProc;
 	wc.hInstance = hInstance;
 	wc.lpszClassName = "Module 3";
 
@@ -112,7 +118,11 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
 	}
 
-	SAFE_DELETE( BackBuffer );
+	DestroyWindow( MainWindow );
 
 	return EXIT_SUCCESS;
+}
+
+sys_win::~sys_win() {
+	SAFE_DELETE( BackBuffer );
 }

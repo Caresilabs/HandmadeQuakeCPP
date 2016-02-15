@@ -10,18 +10,26 @@ union RGB_DATA {
 		uint8 Red;
 	};
 
-	uint32 data;
+	uint32 Data;
 };
 
-bool IsRunning = true;
+class sys_win {
+public:
+	sys_win() = default;
 
-int BufferWidth = 640;
-int BufferHeight = 480;
-void* BackBuffer;
+	static LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
-BITMAPINFO BitMapInfo = { 0 };
+	int SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd );
 
+	~sys_win();
+private:
+	BITMAPINFO BitMapInfo = { 0 };
+	const int BufferWidth = 640;
+	const int BufferHeight = 480;
+	void* BackBuffer;
 
-LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+	static bool IsRunning;
+};
+
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd );
