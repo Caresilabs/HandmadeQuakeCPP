@@ -11,23 +11,23 @@ FrameBuffer::FrameBuffer( uint32 Width, uint32 Height, uint32 BytesPerPixel ) : 
 
 void FrameBuffer::SetPixel( uint32 X, uint32 Y, Color Color ) {
 	if ( BytesPerPixel == 1 ) {
-		*(((RGB8*)Buffer) + (Width * Y + X)) = Color;
+		*(((uint8*)Buffer) + (Width * Y + X)) = Color.Data;
 	} else {
-		*(((RGB32*)Buffer) + (Width * Y + X)) = Color;
+		*(((uint32*)Buffer) + (Width * Y + X)) = Color.Data;
 	}
 }
 
 const Color& FrameBuffer::GetPixel( uint32 X, uint32 Y ) const {
 	if ( BytesPerPixel == 1 ) {
-		return  *((RGB8*)Buffer + (Width * Y + X));
+		return  *((uint8*)Buffer + (Width * Y + X));
 	} else {
-		return  *((RGB32*)Buffer + (Width * Y + X));
+		return  *((uint32*)Buffer + (Width * Y + X));
 	}
 }
 
 void FrameBuffer::Clear( Color Color ) {
 	if ( BytesPerPixel == 1 ) {
-		RGB8* MemoryWalker = (RGB8*)Buffer;
+		uint8* MemoryWalker = (uint8*)Buffer;
 		for ( int i = 0; i < Height; i++ ) {
 			for ( int i = 0; i < Width; i++ ) {
 
@@ -37,22 +37,26 @@ void FrameBuffer::Clear( Color Color ) {
 				MemoryWalker->Blue = 0;
 				*/
 
-				*MemoryWalker = Color;
+				*MemoryWalker = (uint8)Color.Data;
 				++MemoryWalker;
 				//(*MemoryWalker)->RGB = (Red << 16) | (Green << 8) | (Blue);
 			}
 		}
 	} else {
-		RGB32* MemoryWalker = (RGB32*)Buffer;
+		uint32* MemoryWalker = (uint32*)Buffer;
 		for ( int i = 0; i < Height; i++ ) {
 			for ( int i = 0; i < Width; i++ ) {
-				*MemoryWalker = Color;
+				*MemoryWalker = Color.Data;
 				++MemoryWalker;
 			}
 		}
 	}
 }
 
+FrameBuffer::operator void*() {
+	return Buffer;
+}
+
 FrameBuffer::~FrameBuffer() {
-	SAFE_DELETE( Buffer );
+	SAFE_DELETE_ARRAY( Buffer );
 }

@@ -5,7 +5,7 @@ bool SysWin::IsRunning = true;
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
 	SysWin main;
-	return main.SysMain(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
+	return main.SysMain( hInstance, hPrevInstance, lpCmdLine, nShowCmd );
 }
 
 SysWin::SysWin() : BackBuffer( BufferWidth, BufferHeight, BytesPerPixel ) {
@@ -107,9 +107,9 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		// Clear Screen
 		if ( BytesPerPixel == 1 ) {
 			BackBuffer.Clear( RGB8() );
-			DrawRect( BackBuffer, RGB8( 3 ), 10, 10, 400, 200 );
+			DrawRect( BackBuffer, RGB8( 2 ), 10, 10, 400, 200 );
 		} else {
- 			BackBuffer.Clear( RGB32( 255, 0, 0 ) );
+			BackBuffer.Clear( RGB32( 255, 0, 0 ) );
 			DrawRect( BackBuffer, RGB32( 0, 255, 0 ), 10, 10, 400, 200 );
 		}
 
@@ -119,7 +119,7 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			0, 0, BufferWidth, BufferHeight,
 			BackBuffer, (BITMAPINFO*)&BitMapInfo,
 			DIB_RGB_COLORS, SRCCOPY
-		);
+			);
 
 		DeleteDC( DC );
 

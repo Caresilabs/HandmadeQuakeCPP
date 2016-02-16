@@ -26,13 +26,13 @@
     <ClInclude Include="FrameBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Quakedef.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShapeHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SysWin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Quakedef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

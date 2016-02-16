@@ -30,20 +30,23 @@ struct Color {
 	Color( uint32& Data ) : Data( Data ) {
 	}
 
-	Color( RGB8& rgb ) : Data( rgb.Id ) {
+	Color( uint8& Data ) : Data( Data ) {
 	}
 
-	Color( RGB32& rgb ) : Data( rgb ) {
+	Color( RGB8& Rgb ) : Data( Rgb.Id ) {
+	}
+
+	Color( RGB32& Rgb ) : Data( Rgb ) {
 	}
 
 	uint32 Data;
 
-	operator RGB32() {
-		return RGB32( Data >> 16, Data >> 8, Data );
-	}
-	operator RGB8() {
-		return (RGB8)Data;
-	}
+	//operator RGB32() {
+	//	return RGB32( Data >> 16, Data >> 8, Data );
+	//}
+	//operator RGB8() {
+	//	return (RGB8)Data;
+	//}
 };
 
 class FrameBuffer {
@@ -56,9 +59,7 @@ public:
 
 	void Clear( Color Color );
 
-	operator void*() {
-		return Buffer;
-	}
+	operator void*();
 
 	~FrameBuffer();
 

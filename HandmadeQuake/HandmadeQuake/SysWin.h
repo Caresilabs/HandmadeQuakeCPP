@@ -24,7 +24,7 @@ private:
 
 	const int BufferWidth = 640;
 	const int BufferHeight = 480;
-	const int BytesPerPixel = 4;
+	const int BytesPerPixel = 1;
 
 	dibinfo_t BitMapInfo = { 0 };
 	FrameBuffer BackBuffer;
