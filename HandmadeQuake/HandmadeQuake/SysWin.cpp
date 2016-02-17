@@ -107,20 +107,20 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		// Clear Screen
 		if ( BytesPerPixel == 1 ) {
 			BackBuffer.Clear( RGB8() );
-			DrawRect( BackBuffer, RGB8( 2 ), 10, 10, 400, 200 );
+			DrawCircle( BackBuffer, RGB8( 2 ), 320, 240, 200, 20 );
 		} else {
 			BackBuffer.Clear( RGB32( 255, 0, 0 ) );
 			DrawRect( BackBuffer, RGB32( 0, 255, 0 ), 10, 10, 400, 200 );
 		}
 
+		// Draw buffer to the screen
 		HDC DC = GetDC( MainWindow );
 		StretchDIBits( DC,
 			0, 0, BufferWidth, BufferHeight,
 			0, 0, BufferWidth, BufferHeight,
 			BackBuffer, (BITMAPINFO*)&BitMapInfo,
 			DIB_RGB_COLORS, SRCCOPY
-			);
-
+		);
 		DeleteDC( DC );
 
 	}

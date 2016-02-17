@@ -10,6 +10,15 @@ void DrawCircle( FrameBuffer& Buffer, Color Color, uint32 X, uint32 Y, int Radiu
 				Buffer.SetPixel( 320 + x, 240 + y, Color );
 }
 
+void DrawCircle( FrameBuffer& Buffer, Color Color, uint32 X, uint32 Y, int Radius, int Thickness ) {
+	for ( int y = -Radius; y <= Radius; y++ )
+		for ( int x = -Radius; x <= Radius; x++ ) {
+			int sq = x*x + y*y;
+			if ( sq <= Radius*Radius && sq >= (Radius-Thickness)*(Radius - Thickness ))
+				Buffer.SetPixel( 320 + x, 240 + y, Color );
+		}
+}
+
 void DrawRect( FrameBuffer& Buffer, Color Color, uint32 X, uint32 Y, uint32 Width, uint32 Height ) {
 	if ( X + Width > Buffer.Width )
 		Width = Buffer.Width - X;
@@ -23,3 +32,5 @@ void DrawRect( FrameBuffer& Buffer, Color Color, uint32 X, uint32 Y, uint32 Widt
 		}
 	}
 }
+
+
