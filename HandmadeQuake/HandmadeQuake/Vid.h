@@ -4,9 +4,6 @@
 #include "FrameBuffer.h"
 #include "Quakedef.h"
 
-// TODO make platform ind.
-#include <windows.h>
-
 class Host;
 
 enum class ModeState { 
@@ -30,9 +27,10 @@ public:
 	void		Shutdown();
 	void		SetMode( int ModeValue );
 
-private:
+	Host&		MyHost;
+	int32		FirstFullscreenMode;
 
-	static		LRESULT	CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+private:
 
 	void		InitWindowedMode();
 	void		InitFullscreenMode();
@@ -47,9 +45,7 @@ private:
 	const int	BytesPerPixel = 4;
 
 	FrameBuffer BackBuffer;
-	Host&		MyHost;
 
-	int32		FirstFullscreenMode;
 	VMode		ModeList[40];
 	int32		ModeCount = 0;
 

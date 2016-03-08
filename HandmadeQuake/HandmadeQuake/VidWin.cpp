@@ -14,7 +14,8 @@ Vid::Vid( Host& MyHost ) : BackBuffer( BufferWidth, BufferHeight, BytesPerPixel 
 }
 
 
-LRESULT CALLBACK Vid::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
+//LRESULT	CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+LRESULT CALLBACK MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 	LRESULT Result = 0;
 
 	// catch any relevant messages here
@@ -22,15 +23,12 @@ LRESULT CALLBACK Vid::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 	case WM_ACTIVATE:
 
 		break;
-
 	case WM_CREATE:
 
 		break;
-
 	case WM_DESTROY:
-		//Sys_Shutdown();
+		GlobalVideo->MyHost.GetSystem().Shutdown();
 		break;
-
 	case WM_KEYDOWN:
 	{
 		if ( wParam == 'A' ) {
@@ -48,9 +46,8 @@ LRESULT CALLBACK Vid::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 		} else if ( wParam == 'Q' ) {
 			GlobalVideo->MyHost.GetSystem().Shutdown();
 		}
-
-	} break;
-
+		break;
+	}
 	default:
 		Result = DefWindowProc( hWnd, uMsg, wParam, lParam );
 	}
@@ -62,7 +59,7 @@ LRESULT CALLBACK Vid::MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 void Vid::Init() {
 	WNDCLASSEX Wc = { 0 };
 	Wc.cbSize = sizeof( Wc );
-	Wc.lpfnWndProc = Vid::MainWndProc;
+	Wc.lpfnWndProc = MainWndProc;
 	Wc.hInstance = GlobalInstance;
 	Wc.hCursor = LoadCursor( nullptr, IDC_ARROW );
 	Wc.lpszClassName = "Handmade Quake";
@@ -77,8 +74,8 @@ void Vid::Init() {
 }
 
 void Vid::Update() {
-		BackBuffer.Clear( RGB32( 255, 0, 0 ) );
-		DrawRect( BackBuffer, RGB32( 0, 255, 0 ), 10, 10, 400, 200 );
+	BackBuffer.Clear( RGB32( 255, 0, 0 ) );
+	DrawRect( BackBuffer, RGB32( 0, 255, 0 ), 10, 10, 400, 200 );
 
 	// Draw buffer to the screen
 	HDC DC = GetDC( MainWindow );

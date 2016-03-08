@@ -47,7 +47,7 @@ struct Color {
 
 class FrameBuffer {
 public:
-	FrameBuffer	( uint32 Width, uint32 Height, uint32 BytesPerPixel );
+					FrameBuffer	( uint32 Width, uint32 Height, uint32 BytesPerPixel );
 
 	FrameBuffer&	operator=( FrameBuffer&& Rhs );
 
