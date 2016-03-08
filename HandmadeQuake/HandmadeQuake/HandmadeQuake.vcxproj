@@ -121,12 +121,14 @@
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="Host.cpp" />
+    <ClCompile Include="QStl.cpp" />
     <ClCompile Include="SysWin.cpp" />
     <ClCompile Include="VidWin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h" />
     <ClInclude Include="Host.h" />
+    <ClInclude Include="QStl.h" />
     <ClInclude Include="Quakedef.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="ShapeHelper.h" />

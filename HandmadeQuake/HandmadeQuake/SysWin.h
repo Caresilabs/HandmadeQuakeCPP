@@ -1,34 +1,39 @@
 #pragma once
 
-#include "quakedef.h"
-#include "FrameBuffer.h"
-#include <windows.h>
-
-typedef struct dibinfo_s {
-	BITMAPINFOHEADER	bmiHeader;
-	RGBQUAD				acolor[256];
-} dibinfo_t;
+#include "Quakedef.h"
+#include "Sys.h"
+#include "Host.h"
 
 
-class SysWin {
+//typedef struct dibinfo_s {
+//	BITMAPINFOHEADER	bmiHeader;
+//	RGBQUAD				acolor[256];
+//} dibinfo_t;
+//
+
+class SysWin : public Sys {
 public:
 	SysWin();
 
-	static LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-
 	int SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd );
 
-	~SysWin();
+	virtual void Shutdown() override;
+
+	virtual void SendKeyEvents() override;
+
 private:
+	float		InitFloatTime();
+
+	float		FloatTime();
+
+	Host		MyHost;
+
+	// TODO
+	double		GTimePassed;
+	double		SecondsPerTick;
+	__int64		GTimeCount;
+
 	static bool IsRunning;
-
-	const int BufferWidth = 640;
-	const int BufferHeight = 480;
-	const int BytesPerPixel = 1;
-
-	dibinfo_t BitMapInfo = { 0 };
-	FrameBuffer BackBuffer;
-	
 };
 
 

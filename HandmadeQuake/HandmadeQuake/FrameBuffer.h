@@ -1,5 +1,5 @@
 #pragma once
-#include "quakedef.h"
+#include "Quakedef.h"
 
 struct Color;
 
@@ -53,6 +53,20 @@ class FrameBuffer {
 public:
 	FrameBuffer( uint32 Width, uint32 Height, uint32 BytesPerPixel );
 
+	FrameBuffer& operator=( FrameBuffer&& Rhs ) {
+		delete Buffer;
+
+		Width = Rhs.Width;
+		Height = Rhs.Height;
+		BytesPerPixel = Rhs.BytesPerPixel;
+
+		// Cpy buffer
+		Buffer = Rhs.Buffer;
+		Rhs.Buffer = nullptr;
+
+		return *this;
+	}
+
 	void SetPixel( uint32 X, uint32 Y, Color Color );
 
 	const Color& GetPixel( uint32 X, uint32 Y ) const;
@@ -63,9 +77,9 @@ public:
 
 	~FrameBuffer();
 
-	const uint32 Width;
-	const uint32 Height;
-	const uint32 BytesPerPixel;
+	uint32 Width;
+	uint32 Height;
+	uint32 BytesPerPixel;
 
 private:
 	void* Buffer;
