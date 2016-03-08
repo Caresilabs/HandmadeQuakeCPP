@@ -118,14 +118,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
+    <ClCompile Include="Host.cpp" />
     <ClCompile Include="SysWin.cpp" />
+    <ClCompile Include="VidWin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="Host.h" />
     <ClInclude Include="Quakedef.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="ShapeHelper.h" />
+    <ClInclude Include="Sys.h" />
     <ClInclude Include="SysWin.h" />
+    <ClInclude Include="Vid.h" />
+    <ClInclude Include="WinQuake.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
