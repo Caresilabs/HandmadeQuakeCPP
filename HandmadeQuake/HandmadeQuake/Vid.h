@@ -9,7 +9,9 @@
 
 class Host;
 
-enum class ModeState { WINDOWED, FULLSCREEN };
+enum class ModeState { 
+	WINDOWED, FULLSCREEN 
+};
 
 struct VMode {
 	ModeState	Type;
@@ -18,11 +20,10 @@ struct VMode {
 	uint32		Hz;
 };
 
-
 class Vid {
 public:
 
-	Vid( Host& MyHost );
+				Vid( Host& MyHost );
 
 	void		Init();
 	void		Update();

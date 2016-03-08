@@ -15,25 +15,25 @@ class SysWin : public Sys {
 public:
 	SysWin();
 
-	int SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd );
+	int				SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd );
 
-	virtual void Shutdown() override;
+	virtual void	Shutdown() override;
 
-	virtual void SendKeyEvents() override;
+	virtual void	SendKeyEvents() override;
 
 private:
-	float		InitFloatTime();
+	float			InitFloatTime();
 
-	float		FloatTime();
+	float			FloatTime();
 
-	Host		MyHost;
+	Host			MyHost;
 
 	// TODO
-	double		GTimePassed;
-	double		SecondsPerTick;
-	__int64		GTimeCount;
+	double			GTimePassed;
+	double			SecondsPerTick;
+	__int64			GTimeCount;
 
-	static bool IsRunning;
+	static bool		IsRunning;
 };
 
 

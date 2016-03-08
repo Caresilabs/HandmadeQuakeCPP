@@ -1,38 +1,18 @@
 #include "Quakedef.h"
 #include "WinQuake.h"
-#include "ShapeHelper.h"
 #include "SysWin.h"
+
+bool			SysWin::IsRunning = true;
+HINSTANCE		GlobalInstance;
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
 	SysWin Main;
 	return Main.SysMain( hInstance, hPrevInstance, lpCmdLine, nShowCmd );
 }
 
-bool SysWin::IsRunning = true;
-HINSTANCE GlobalInstance;
 
-SysWin::SysWin() : MyHost(*this) {
-
+SysWin::SysWin() : MyHost(*this), GTimeCount(0), GTimePassed(0), SecondsPerTick(0) {
 }
-
-//LRESULT SysWin::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
-//	LRESULT Result = 0;
-//
-//	switch ( uMsg ) {
-//	case WM_DESTROY:
-//		IsRunning = false;
-//		break;
-//	case WM_CREATE:
-//		break;
-//	case WM_KEYUP:
-//		IsRunning = false;
-//		break;
-//	default:
-//		Result = DefWindowProc( hWnd, uMsg, wParam, lParam );
-//		break;
-//	}
-//	return Result;
-//}
 
 int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd ) {
 	GlobalInstance = hInstance;
@@ -49,18 +29,6 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		float NewTime = FloatTime();
 		MyHost.Frame( NewTime - Oldtime );
 		Oldtime = NewTime;
-
-		//// Clear Screen
-		//if ( BytesPerPixel == 1 ) {
-		//	BackBuffer.Clear( RGB8() );
-		//	DrawCircle( BackBuffer, RGB8( 2 ), 320, 240, 200, 20 );
-		//} else {
-		//	BackBuffer.Clear( RGB32( 255, 0, 0 ) );
-		//	DrawRect( BackBuffer, RGB32( 0, 255, 0 ), 10, 10, 400, 200 );
-		//}
-
-
-
 	}
 
 	MyHost.Shutdown();

@@ -1,6 +1,8 @@
 #pragma once
 #include "Quakedef.h"
 
+// TODO make sure color sttuff doesn't copy all the time
+
 struct Color;
 
 struct RGB8 {
@@ -41,48 +43,30 @@ struct Color {
 
 	uint32 Data;
 
-	//operator RGB32() {
-	//	return RGB32( Data >> 16, Data >> 8, Data );
-	//}
-	//operator RGB8() {
-	//	return (RGB8)Data;
-	//}
 };
 
 class FrameBuffer {
 public:
-	FrameBuffer( uint32 Width, uint32 Height, uint32 BytesPerPixel );
+	FrameBuffer	( uint32 Width, uint32 Height, uint32 BytesPerPixel );
 
-	FrameBuffer& operator=( FrameBuffer&& Rhs ) {
-		delete Buffer;
+	FrameBuffer&	operator=( FrameBuffer&& Rhs );
 
-		Width = Rhs.Width;
-		Height = Rhs.Height;
-		BytesPerPixel = Rhs.BytesPerPixel;
+	void			SetPixel( uint32 X, uint32 Y, Color Color );
 
-		// Cpy buffer
-		Buffer = Rhs.Buffer;
-		Rhs.Buffer = nullptr;
+	const			Color& GetPixel( uint32 X, uint32 Y ) const;
 
-		return *this;
-	}
+	void			Clear( Color Color );
 
-	void SetPixel( uint32 X, uint32 Y, Color Color );
-
-	const Color& GetPixel( uint32 X, uint32 Y ) const;
-
-	void Clear( Color Color );
-
-	operator void*();
+	operator void*	();
 
 	~FrameBuffer();
 
-	uint32 Width;
-	uint32 Height;
-	uint32 BytesPerPixel;
+	uint32			Width;
+	uint32			Height;
+	uint32			BytesPerPixel;
 
 private:
-	void* Buffer;
+	void*			Buffer;
 
 };
 

@@ -3,6 +3,8 @@
 #include "Host.h"
 #include "Sys.h"
 
+#include "ShapeHelper.h"
+
 static HWND				MainWindow;
 static Vid*				GlobalVideo;
 static BITMAPINFO		BitMapInfo = { 0 };
@@ -75,6 +77,9 @@ void Vid::Init() {
 }
 
 void Vid::Update() {
+		BackBuffer.Clear( RGB32( 255, 0, 0 ) );
+		DrawRect( BackBuffer, RGB32( 0, 255, 0 ), 10, 10, 400, 200 );
+
 	// Draw buffer to the screen
 	HDC DC = GetDC( MainWindow );
 	StretchDIBits( DC,

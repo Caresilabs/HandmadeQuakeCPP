@@ -9,6 +9,20 @@ FrameBuffer::FrameBuffer( uint32 Width, uint32 Height, uint32 BytesPerPixel ) : 
 	}
 }
 
+FrameBuffer& FrameBuffer::operator=( FrameBuffer&& Rhs ) {
+	delete Buffer;
+
+	Width = Rhs.Width;
+	Height = Rhs.Height;
+	BytesPerPixel = Rhs.BytesPerPixel;
+
+	// Cpy buffer
+	Buffer = Rhs.Buffer;
+	Rhs.Buffer = nullptr;
+
+	return *this;
+}
+
 void FrameBuffer::SetPixel( uint32 X, uint32 Y, Color Color ) {
 	if ( BytesPerPixel == 1 ) {
 		*(((uint8*)Buffer) + (Width * Y + X)) = Color.Data;
