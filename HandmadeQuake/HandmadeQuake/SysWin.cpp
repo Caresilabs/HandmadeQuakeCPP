@@ -121,7 +121,7 @@ int SysWin::SysMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			BackBuffer, (BITMAPINFO*)&BitMapInfo,
 			DIB_RGB_COLORS, SRCCOPY
 		);
-		DeleteDC( DC );
+		ReleaseDC( MainWindow, DC );
 
 	}
 
