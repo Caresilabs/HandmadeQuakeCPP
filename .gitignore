@@ -3,6 +3,7 @@
 
 # Quake Files
 *.lmp
+*.pak
 
 # User-specific files
 *.suo
